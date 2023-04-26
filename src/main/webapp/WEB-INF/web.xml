@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <!-- 스프링의 핵심 설정 파일인 servlet-context와 root-context를 불러들이는 web.xml -->
+
+    <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+    <!-- 스프링 MVC 설정 파일 등록 - STS에서 기본적으로 제공하는 기본 설정 파일 외에 사용자가 직접 제어하는
+    XML 파일 목록을 지정. root-context는 모든 서블릿과 필터에서 사용되는 루트 스프링 컨테리너 설정임 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring/root-context.xml</param-value>
+    </context-param>
+
+    <!-- Creates the Spring Container shared by all Servlets and Filters -->
+    <!-- 스프링 MVC 파일 정보 읽기 - 루트 컨텍스트에 설정된 정보들을 모든 서블릿과 필터에 공유함 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- 서블릿 컨텍스트 설정 - 디스패처 서블릿이 모든 요청을 받고 요청 URL을 처리하는 컨트롤러에 매핑할 수
+    있도록 <servlet> 요소를 이용하여 설정 -->
+    <servlet>
+        <servlet-name>appServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>    <!-- <init-param>은 <context-param> 과 동일한 역할임 -->
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring/servlet-context.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>    <!-- 로딩하는 순서를 설정, 서블릿이 여러개일때 순번을 주어 로딩할 수 있음-->
+    </servlet>
+
+    <!-- 서블릿 매핑 경로 패턴 설정 - 요청되는 URL에 대한 디스패처 서블릿이 서블릿에
+    매핑하는 역할. <url-pattern> 요소에 서블릿 매핑을 위해 URL 패턴을 설정. -->
+    <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>

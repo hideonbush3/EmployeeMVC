@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- 서블릿 컨텍스트에서만 사용됨
+    뷰와 관련있는 빈 객체를 설정 ex)컨트롤러, MultipartResolver, Interceptor, URI 등 -->
+
+    <!-- 핸들러맵핑 - 요청 URL을 처리하는 컨트롤러에 매핑할 수 있도록 설정
+    이 설정으로 요청 URL과 같은 컨트롤러의 @RequestMapping에 지정된 URL을 매핑함-->
+    <mvc:annotation-driven />
+
+    <!-- 뷰리졸버 - 컨트롤러에서 보내온 뷰 이름을 토대로 디스패처 서블릿이 처리할 뷰를 검색한다 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!-- base-package 속성의 값으로 지정된 경로에 자바클래스를 생성할 때 빈 객체를 자동으로 등록함 -->
+    <context:component-scan base-package="project.spring4.mvc.employee" />
+</beans>
