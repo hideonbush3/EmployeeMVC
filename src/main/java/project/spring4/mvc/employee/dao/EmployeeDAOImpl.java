@@ -19,6 +19,10 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     public EmployeeDAOImpl(JdbcTemplate jdbcTemplate){this.jdbcTemplate = jdbcTemplate;}
 
     @Value("#{jdbc['selectSQL']}") private String selectSQL;
+    @Value("#{jdbc['selectOneSQL']}") private String selectOneSQL;
+    @Value("#{jdbc['insertSQL']}") private String insertSQL;
+    @Value("#{jdbc['updateSQL']}") private String updateSQL;
+    @Value("#{jdbc['deleteSQL']}") private String deleteSQL;
 
     @Override
     public int insertEmployee(Employee emp) {
@@ -35,9 +39,9 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         // mapRow() 메소드는 jdbcTemplate 의 query() 메서드가 데이터베이스에서 조회된 결과셋을 처리하는 과정에서 내부적으로 호출된다
         @Override
         public Employee mapRow(ResultSet rs, int num) throws SQLException {
-            Employee empvo = new Employee(rs.getInt(1), rs.getString(2),
+            Employee emp = new Employee(rs.getInt(1), rs.getString(2),
                     rs.getString(3), rs.getString(4), rs.getInt(5));
-            return empvo;
+            return emp;
         }
     }
 
